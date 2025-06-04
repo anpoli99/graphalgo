@@ -4503,12 +4503,14 @@ const toolDescriptionMenu = new Menu(
 );
 const toolDescriptionLineHeight = 18;
 function getToolDescriptionButton(text) {
-    return new TextButton(
+    const res = TextButton(
         text, toolDescriptionMenuWidth, toolDescriptionLineHeight,
         toolDescriptionMenuX, toolDescriptionMenuY + toolDescriptionLineHeight * toolDescriptionMenu.items.length,
         null, 'left', toolDescriptionFont,
         null, 0, toolFontColor
     );
+    res.disable();
+    return res;
 }
 const lines = getToolDescription().split('\n');
 for(const line of lines) { 
