@@ -4387,7 +4387,7 @@ A stack is used to efficiently keep track of the vertices still being processed,
 
 Time Complexity: O(V + E)
 
-During this animation, each vertex is labeled with in the format (discovery time | lowlink).
+During this animation, each vertex is labeled with the format (discovery time | lowlink).
 `
 
 const edmondsKarpDescription = `The maximum-flow problem asks for the maximum flow from a source vertex to a sink vertex in a flow network, such that 
