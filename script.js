@@ -4486,6 +4486,7 @@ M: Move a vertex
 H: Toggle hint menu
 R: Run/Pause the algorithm
 Double click an edge to change its weight
+If things don't look right, please try zooming out and reloading the page :')
 Current mode:`
 function getModeText(){
 
@@ -4509,7 +4510,7 @@ function getToolDescription() {
     return toolDescription + ' ' + getModeText();
 }
 const toolDescriptionMenuWidth = 400;
-const toolDescriptionMenuHeight = 205;
+const toolDescriptionMenuHeight = 225;
 const toolDescriptionMenuX = 10;
 const toolDescriptionMenuY = canvas.height - toolDescriptionMenuHeight - 10;
 const toolDescriptionFont = 'bold 12px Inter, sans-serif';

@@ -13,3 +13,6 @@ This graph-visualization tool allows users to easily build and edit graphs, and 
 - Floyd-Warshall All-Pairs Shortest Paths
 - Tarjan's Strongly Connected Components
 - Edmonds-Karp Maximum Flow
+
+
+If things don't look right when viewing the editor, please try zooming out and reloading the page :')
