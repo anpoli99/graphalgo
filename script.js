@@ -4285,6 +4285,8 @@ Using a priority queue, we can find the closest unprocessed vertex efficiently, 
 We repeat this until we have processed all vertices, and found the shortest path to each vertex (or that no path at all exists).
 
 Time Complexity: O(E log V)
+
+This animation highlights the edges that are used by any vertex to calculate its shortest path.
 `
 
 const bellmanfordDescription = `A major limitation of Dijkstra's algorithm is that it assumes there are no negative-weight edges.
@@ -4301,6 +4303,9 @@ The only way that we can find a shorter path after |V| - 1 iterations is if ther
 These negative-weight cycles can then be propagated to detect all vertices whose shortest path can be made arbitrarily small.
 
 Time Complexity: O(V * E)
+
+The animation highlights the edges that are used by any vertex to calculate its shortest path, however, 
+as the parents of this vertex may be updated after this edge is explored, the shortest paths to each vertex may not reflect the edges highlighted.
 `
 
 const primsDescription = `The minimum spanning tree (MST) of a graph is the set of edges with minimum weight that does not form any cycles.
@@ -4314,6 +4319,8 @@ Using min-heap (or similar data structure) allows us to quickly find the next mi
 This greedy algorithm always yields a spanning tree with minimum weight, although such a tree may not be unique.
 
 Time Complexity: O(E log V) 
+
+During the animation, each vertex displays the minimum cost to connect it to the growing tree.
 `
 
 const kruskalsDescription = `The minimum spanning tree (MST) of a graph is the set of edges with minimum weight that does not form any cycles.
@@ -4343,6 +4350,8 @@ But after placing these vertices into the sorting, we no longer care about their
 After repeating this process, we will either find a topological sorting of the graph, or determine that a cycle exists somewhere.
 
 Time Complexity: O(V + E)
+
+This animation shows the count of incoming edges for each vertex.
 `
 
 const floydwarshallDescription = `The Floyd-Warshall algorithm finds the shortest paths between all pairs of vertices in a weighted graph.
@@ -4356,6 +4365,9 @@ The Floyd-Warshall algorithm works on graphs with negative-weight edges, and det
 the distance from a vertex to itself becomes negative after the algorithm completes.
 
 Time Complexity: O(V^3)
+
+During this animation, the pivot vertex is highlighted in yellow, and the vertices u and v are highlighted in red or green,
+depending on whether a shorter path was found through the pivot.
 `
 
 const tarjanDescription = `A strongly connected component (SCC) of a directed graph is a maximal subgraph where every vertex is reachable from every other vertex.
@@ -4374,6 +4386,8 @@ and we can add all vertices reachable from it to a new component.
 A stack is used to efficiently keep track of the vertices still being processed, and to build the components.
 
 Time Complexity: O(V + E)
+
+During this animation, each vertex is labeled with in the format (discovery time | lowlink).
 `
 
 const edmondsKarpDescription = `The maximum-flow problem asks for the maximum flow from a source vertex to a sink vertex in a flow network, such that 
@@ -4395,6 +4409,9 @@ After this process converges, we will have found the maximum flow from the sourc
 
 Time Complexity: Each edge can be saturated at most O(V) times, and each BFS takes O(E), so the total time complexity is O(V * E^2).
 Although, typically, the algorithm converges much faster than this worst-case upper-bound.
+
+During this animation, each vertex is labeled with the maximum flow of the augmenting path that contains it 
+(the minumum remaining capacity of any edge on the path).
 `
 function getToolTipText() {
     
