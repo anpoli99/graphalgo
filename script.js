@@ -112,7 +112,7 @@ window.addEventListener('resize', resizeCanvas);
 
 resizeCanvas();
 const codeViewX = canvas.width - codeViewWidth - 20;
-const codeViewY = 100;
+const codeViewY = 40;
 const animationSliderX = canvas.width - animationSliderWidth - 20;
 const animationSliderY = canvas.height - animationSliderHeight - 80;
 
@@ -3483,6 +3483,7 @@ class CodeBlock extends Menu {
                 null, 'left', font,
                 null, 0, 'black'
             );
+            btn.disable();
             this.addItem(btn);
             this.lineButtons.push(btn);
         });
