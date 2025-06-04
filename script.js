@@ -4503,7 +4503,7 @@ const toolDescriptionMenu = new Menu(
 );
 const toolDescriptionLineHeight = 18;
 function getToolDescriptionButton(text) {
-    const res = TextButton(
+    const res = new TextButton(
         text, toolDescriptionMenuWidth, toolDescriptionLineHeight,
         toolDescriptionMenuX, toolDescriptionMenuY + toolDescriptionLineHeight * toolDescriptionMenu.items.length,
         null, 'left', toolDescriptionFont,
