@@ -4734,7 +4734,7 @@ function fetchPresets(){
 
     }
 
-    
+    res.push(generate_preset_button('clear', () => {loadVertices = []; loadEdges = []; loadDirected = false; loadSourceIdx = -1; loadSinkIdx = -1;}));
     return res;
 }
 presetMenu.addItem(presetLabel);
