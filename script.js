@@ -1971,6 +1971,12 @@ class Algorithm {
             }
         }
         await highlightAndReset(findLinesByKeywords(['return']));
+        for (let edge of edges) {
+            if (edge.color === fancyBlue) {
+            } else {
+                edge.color = '#F3F3F3'; // Reset color for non-MST edges
+            }
+        }
         await this.heartbeat();
         await sleep(exitSleepDuration);
         while (algorithmPaused) {
@@ -2039,7 +2045,7 @@ class Algorithm {
                     return;
                 }
                 await sleep(75 / animationSpeedFactor);
-                edge.setColor('#AAAAAA'); // Reset color
+                edge.setColor('#F3F3F3'); // Reset color
                 if (!(await this.heartbeat(showVertexSpeed))) {
                     this.kruskalsExit();
                     return;
