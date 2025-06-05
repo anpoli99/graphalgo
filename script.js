@@ -4264,7 +4264,7 @@ Time Complexity: O(V + E)
 
 const twoColoringDescription = `2-Coloring is a graph coloring algorithm that determines if a graph is bipartite.
 
-A graph is bipartite it can be colored with two colors such that no two adjacent vertices have the same color.
+A graph is bipartite if each vertex can be colored with two colors such that no two adjacent vertices have the same color.
 
 By fixing one color for a given vertex, we can propagate this choice to all its neighbors, alternating colors as we go.
 
