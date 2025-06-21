@@ -57,6 +57,9 @@ const codeBlockFont =  `${codeBlockFontSize}px Courier New, monospace`;
 const codeViewWidth = 510;
 const codeViewHeight = 1000;
 
+let pauseWhenFinished = true; // global variable to track pause state
+
+
 let currentAlgorithm = null;
 let algorithmExecutor = null;
 let edgeWeightValidator = null;
@@ -1167,6 +1170,7 @@ class Algorithm {
         await this.highlightAndReset(findLinesByKeywords(['return']));
         await this.heartbeat();
         await(sleep(exitSleepDuration));
+        if (pauseWhenFinished) algorithmPaused = true;
         while (algorithmPaused) {
             await sleep(100);
         }
@@ -1289,6 +1293,7 @@ class Algorithm {
         await this.highlightAndReset(findLinesByKeywords(['return']));
         await this.heartbeat();
         await sleep(exitSleepDuration);
+        if (pauseWhenFinished) algorithmPaused = true;
         while (algorithmPaused) {
             await sleep(100);
         }
@@ -1422,6 +1427,7 @@ class Algorithm {
         }
         await this.highlightAndReset(findLinesByKeywords(['return']));
         await this.heartbeat();
+        if (pauseWhenFinished) algorithmPaused = true;
         await sleep(exitSleepDuration);
         while (algorithmPaused) {
             await sleep(100);
@@ -1559,6 +1565,7 @@ class Algorithm {
                             return;
                         }
                         await this.heartbeat();
+                        if (pauseWhenFinished) algorithmPaused = true;
                         await sleep(exitSleepDuration);
                         while (algorithmPaused) {
                             await sleep(100);
@@ -1595,6 +1602,7 @@ class Algorithm {
         await this.highlightAndReset([returnTrueIdx[1]]);
         await this.heartbeat();
         await sleep(exitSleepDuration);
+        if (pauseWhenFinished) algorithmPaused = true;
         while (algorithmPaused) {
             await sleep(100);
         }
@@ -1808,6 +1816,7 @@ class Algorithm {
         await this.highlightAndReset(findLinesByKeywords(['return']));
         await this.heartbeat();
         await sleep(exitSleepDuration);
+        if (pauseWhenFinished) algorithmPaused = true;
         while (algorithmPaused) {
             await sleep(100);
         }
@@ -1979,6 +1988,7 @@ class Algorithm {
         }
         await this.heartbeat();
         await sleep(exitSleepDuration);
+        if (pauseWhenFinished) algorithmPaused = true;
         while (algorithmPaused) {
             await sleep(100);
         }
@@ -2056,6 +2066,7 @@ class Algorithm {
         await highlightAndReset(findLinesByKeywords(['return']));
         await this.heartbeat();
         await sleep(exitSleepDuration);
+        if (pauseWhenFinished) algorithmPaused = true;
         while (algorithmPaused) {
             await sleep(100);
         }
@@ -2268,6 +2279,7 @@ class Algorithm {
         }
         await this.heartbeat();
         await sleep(exitSleepDuration);
+        if (pauseWhenFinished) algorithmPaused = true;
         while (algorithmPaused) {
             await sleep(100);
         }
@@ -2451,6 +2463,7 @@ class Algorithm {
                 }
                 await this.heartbeat();
                 await sleep(exitSleepDuration);
+                if (pauseWhenFinished) algorithmPaused = true;
                 while (algorithmPaused) {
                     await sleep(100);
                 }
@@ -2465,6 +2478,7 @@ class Algorithm {
             return;
         }
         await sleep(exitSleepDuration);
+        if (pauseWhenFinished) algorithmPaused = true;
         while (algorithmPaused) {
             await sleep(100);
         }
@@ -2726,6 +2740,7 @@ class Algorithm {
             return;
         }
         await sleep(exitSleepDuration);
+        if (pauseWhenFinished) algorithmPaused = true;
         while (algorithmPaused) {
             await sleep(100);
         }
@@ -2775,6 +2790,7 @@ class Algorithm {
                 return;
             }
             await sleep(exitSleepDuration);
+            if (pauseWhenFinished) algorithmPaused = true;
             while (algorithmPaused) {
                 await sleep(100);
             }
@@ -3086,6 +3102,7 @@ class Algorithm {
             return;
         }
         await sleep(exitSleepDuration);
+        if (pauseWhenFinished) algorithmPaused = true;
         while (algorithmPaused) {
             await sleep(100);
         }
@@ -3858,6 +3875,7 @@ class DirectedCheckbox extends TextButton {
         super((directedEdges ? 'x' : ' '), checkboxSize, checkboxSize,
             animationSliderX - checkboxSize - 8, animationSliderY + 3,
             () => {
+                if(algorithmRunning) return; // don't change while running
                 convertEdges(!directedEdges); // has side effect don't change again
                 this.label = directedEdges ? 'x' : ' ';
             }, 'center', 'bold 18px Montserrat, sans-serif',
@@ -3871,10 +3889,11 @@ class DirectedCheckbox extends TextButton {
 } 
 const directedCheckboxMenu = new Menu(
     checkboxSize + 5, animationSliderHeight + 60,
-    animationSliderX - checkboxSize - 60, animationSliderY + 3,
+    animationSliderX - checkboxSize - 60, animationSliderY - 10,
     false // no border
 );
 directedCheckboxMenu.addItem(new DirectedCheckbox());
+const directedCheckboxY = animationSliderY + animationSliderHeight - 30;
 directedCheckboxMenu.addItem(new TextButton(
     'Directed Edges', checkboxSize + 5, 20,
     animationSliderX - checkboxSize - 60, animationSliderY + animationSliderHeight + 5,
@@ -3903,6 +3922,36 @@ function unloadDirectedCheckbox() {
         // pass; already gone
     }
 }
+
+class PauseWhenFinishedCheckbox extends TextButton {
+    constructor() {
+        super((pauseWhenFinished ? 'x' : ' '), checkboxSize, checkboxSize,
+            animationSliderX - checkboxSize - 8, animationSliderY + 20,
+            () => {
+                pauseWhenFinished = !pauseWhenFinished;
+                this.text = pauseWhenFinished ? 'x' : ' ';
+            }, 'center', 'bold 18px Montserrat, sans-serif',
+            null, 1, 'black');
+    }
+    draw(context) {
+        this.text = pauseWhenFinished ? 'x' : ' ';
+        super.draw(context);
+    }
+}
+const pauseWhenFinishedCheckboxMenu = new Menu(
+    checkboxSize + 5, animationSliderHeight + 80,
+    animationSliderX - checkboxSize - 60, animationSliderY + 30,
+    false // no border
+);
+pauseWhenFinishedCheckboxMenu.addItem(new PauseWhenFinishedCheckbox());
+const pauseWhenFinishedCheckboxY = animationSliderY + animationSliderHeight - 30;
+pauseWhenFinishedCheckboxMenu.addItem(new TextButton(
+    'Pause When Finished?', checkboxSize + 5, 20,
+    animationSliderX - checkboxSize - 60, animationSliderY + animationSliderHeight + 5,
+    null, 'center', checkboxFont,
+    null, 0, 'black'
+));
+menus.push(pauseWhenFinishedCheckboxMenu); // add to the global menus array
 
 class HorizontalMenu extends Menu {
     constructor(width, height, x, y,
@@ -4993,7 +5042,7 @@ canvas.addEventListener('dblclick', (e) => {
     const clickedVertex = vertexAt(x, y);
     const clickedEdge = edgeAt(x, y);
     if (clickedVertex) {
-        // typingObject = clickedVertex; disabled, i think it's annoying
+        typingObject = clickedVertex; // disabled, i think it's annoying
     } else if (clickedEdge) {   
         if (weightedEdges){
             typingObject = clickedEdge;
@@ -5057,6 +5106,7 @@ window.addEventListener('keydown',  async (e) => {
     if(algorithmRunning) {
         if (e.key == 'Escape') {
             algorithmTerminated = true;
+            algorithmPaused = false;
         }else if(e.key == 'p'){
             algorithmPaused = !algorithmPaused;
         }
